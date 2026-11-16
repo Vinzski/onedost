@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DTR</title>
+    <meta name="description" content="Your Daily Time Record: every blank, and why.">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#0D6EFD">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" href="icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="icon-192.png">
+
+    <script>
+        // Light or dark, as the device is set, before anything paints.
+        (function () {
+            var dark = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+            function apply() { document.documentElement.setAttribute('data-bs-theme', dark && dark.matches ? 'dark' : 'light'); }
+            apply();
+            if (dark && dark.addEventListener) dark.addEventListener('change', apply);
+        }());
+    </script>
+
+    <!-- Everything is in this folder, so the page works without internet. -->
+    <link rel="stylesheet" href="vendor/bootstrap.min.css">
+    <link rel="stylesheet" href="vendor/remixicon/remixicon.css">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+    <div id="app">
+        <p class="loading">Loading…</p>
+        <noscript><p class="loading">This page needs JavaScript turned on.</p></noscript>
+    </div>
+
+    <script src="vendor/vue.global.prod.js"></script>
+    <script src="js/reader.js"></script>
+    <script src="js/record.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        Vue.createApp(DtrApp.App).mount('#app');
+
+        // Online (https), keep a copy so the page opens with no internet. Opened as a file, it's already offline.
+        if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+            navigator.serviceWorker.register('sw.js').catch(function () {});
+        }
+    </script>
+</body>
+</html>

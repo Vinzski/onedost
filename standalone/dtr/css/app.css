@@ -1,0 +1,183 @@
+/* The DTR page: OneDOST's look (resources/css/tokens.css), standing alone. */
+
+:root {
+    --brand: #0D6EFD;
+    --brand-strong: #0A58CA;
+    --brand-subtle: #CFE2FF;
+    --surface-page: #F3F4F6;
+    --surface-card: #FFFFFF;
+    --surface-sunken: #F8F9FA;
+    --hairline: #DEE2E6;
+    --ink: #16191D;
+    --ink-soft: #5C646C;
+    --ink-faint: #8A9198;
+    --shadow-pop: 0 6px 20px rgba(12, 16, 20, .22);
+
+    --bs-body-font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --bs-body-font-size: .875rem;
+    --bs-body-color: var(--ink);
+    --bs-body-bg: var(--surface-page);
+}
+
+[data-bs-theme="dark"] {
+    --surface-page: #0B0D0F;
+    --surface-card: #14171A;
+    --surface-sunken: #1A1E22;
+    --hairline: #272C31;
+    --ink: #E8EBEE;
+    --ink-soft: #9CA4AB;
+    --ink-faint: #6B737A;
+    --brand-subtle: rgba(13, 110, 253, .18);
+    --bs-body-bg: var(--surface-page);
+    --bs-body-color: var(--ink);
+}
+
+body { background: var(--surface-page); color: var(--ink); }
+.card { background: var(--surface-card); border-color: var(--hairline); }
+.loading { padding: 2rem; color: var(--ink-soft); text-align: center; }
+
+.page { max-width: 1100px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+.intro { max-width: 34rem; }
+.quick-note { border-left: 3px solid var(--brand); }
+.month-title { min-width: 10rem; text-align: center; }
+.save-state { margin-top: -1rem; }
+.num { font-variant-numeric: tabular-nums; }
+
+/* ─── Figures ─────────────────────────────────────────────────────────── */
+.stat { color: var(--ink); text-align: left; transition: border-color .12s ease; }
+button.stat:not(:disabled) { cursor: pointer; }
+button.stat:not(:disabled):hover, .stat-active { border-color: var(--brand); }
+.stat-warn .stat-value { color: var(--bs-warning-text-emphasis); }
+.stat-label {
+    font-size: .6875rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+}
+.stat-value { font-size: 1.75rem; font-weight: 700; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.stat-text { font-size: 1.25rem; padding: .2rem 0; }
+
+/* ─── The month ───────────────────────────────────────────────────────── */
+.dtr-table { --bs-table-bg: var(--surface-card); }
+.dtr-table th {
+    font-size: .6875rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    background: var(--surface-sunken);
+    white-space: nowrap;
+}
+.dtr-table td { padding-top: .35rem; padding-bottom: .35rem; }
+.col-day { width: 7.5rem; white-space: nowrap; }
+.col-time { width: 6.5rem; text-align: center; }
+.col-undertime { width: 6rem; text-align: center; }
+.day-number { display: inline-block; min-width: 1.4rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+.row-unexplained td:first-child { box-shadow: inset 3px 0 0 var(--bs-warning); }
+.row-explained td:first-child { box-shadow: inset 3px 0 0 var(--bs-success); }
+.row-off td, .row-upcoming td { color: var(--ink-faint); }
+.row-today td { background: var(--brand-subtle); }
+
+.remark { text-align: center; font-size: .6875rem; letter-spacing: .3em; color: var(--bs-danger); font-weight: 700; }
+.remark-off { color: var(--ink-faint); font-weight: 400; background: var(--surface-sunken); }
+
+.blank {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    border: 1px dashed;
+    background: transparent;
+    padding: 0;
+    line-height: 1;
+}
+.blank-open { border-color: var(--bs-warning); color: var(--bs-warning-text-emphasis); background: var(--bs-warning-bg-subtle); }
+.blank-open:hover { background: var(--bs-warning); color: #000; }
+.blank-explained { border-style: solid; border-color: var(--bs-success-border-subtle); color: var(--bs-success-text-emphasis); background: var(--bs-success-bg-subtle); }
+.blank.legend { width: 1.25rem; height: 1.25rem; font-size: .7rem; vertical-align: middle; }
+
+.why { min-width: 14rem; }
+.note-chip { border: 0; font-size: .75rem; max-width: 22rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.add-note { opacity: .4; }
+tr:hover .add-note, .add-note:focus { opacity: 1; }
+
+/* On a phone: the four times fit across, so every "?" is in reach without scrolling. */
+@media (max-width: 575.98px) {
+    .page { padding: 1rem .75rem 2.5rem; }
+    .dtr-table th { font-size: .5625rem; letter-spacing: .02em; white-space: normal; line-height: 1.2; }
+    .dtr-table td, .dtr-table th { padding-left: .2rem; padding-right: .2rem; }
+    .col-day { width: 3.6rem; }
+    .col-day .gap-2 { gap: .25rem !important; }
+    .col-day .badge { display: none; }
+    .col-time { width: 3.4rem; font-size: .8125rem; }
+    .col-undertime { display: none; }
+    .remark { letter-spacing: .1em; font-size: .625rem; }
+    .why { min-width: 10rem; }
+}
+
+/* ─── The day dialog ──────────────────────────────────────────────────── */
+.modal-content { background: var(--surface-card); }
+.time-pill {
+    display: inline-flex;
+    flex-direction: column;
+    padding: .35rem .75rem;
+    border: 1px solid var(--hairline);
+    border-radius: 6px;
+    font-size: .8125rem;
+    min-width: 6.5rem;
+}
+.time-pill-blank { border-color: var(--bs-warning); border-style: dashed; }
+
+/* ─── Messages ────────────────────────────────────────────────────────── */
+.toasts {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    left: 1rem;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: .5rem;
+    pointer-events: none;
+}
+.toast-item {
+    max-width: 26rem;
+    padding: .6rem .9rem;
+    border-radius: 6px;
+    color: #fff;
+    font-size: .8125rem;
+    box-shadow: var(--shadow-pop);
+    pointer-events: auto;
+}
+.toast-success { background: #198754; }
+.toast-warning { background: #FFC107; color: #000; }
+.toast-error { background: #DC3545; }
+
+/* ─── The printed sheet ───────────────────────────────────────────────── */
+.print-sheet { color: #000; background: #fff; font-family: Arial, Helvetica, sans-serif; font-size: 10pt; }
+.sheet-title { font-size: 12pt; font-weight: 700; text-align: center; text-decoration: underline; margin: 0 0 1rem; }
+.sheet-meta { margin-bottom: 1rem; }
+.sheet-meta th { font-weight: 400; padding-right: 1rem; white-space: nowrap; }
+.sheet-meta td { font-weight: 700; }
+.sheet-entries { width: 100%; border-collapse: collapse; }
+.sheet-entries th, .sheet-entries td { border: 1px solid #000; padding: 4px 6px; vertical-align: top; }
+.sheet-entries th { font-size: 9pt; text-align: center; background: #F1F3F5; }
+.sheet-entries .col-date { width: 24mm; white-space: nowrap; }
+.sheet-entries .col-entry { width: 38mm; }
+.sheet-entries .col-actual { width: 22mm; text-align: center; }
+.sheet-entries .missing td:not(.col-date) { font-style: italic; }
+.certify { margin: 1.5rem 0 2.5rem; text-indent: 2em; }
+.signatures { display: flex; justify-content: space-between; gap: 2rem; }
+.signatures > div { width: 45%; text-align: center; }
+.signatures .line { border-top: 1px solid #000; padding-top: 2px; font-weight: 700; margin-top: 2rem; }
+.signatures .role { font-size: 9pt; }
+
+@media print {
+    @page { size: A4; margin: 16mm; }
+    body { background: #fff; }
+}

@@ -1,0 +1,287 @@
+/* =============================================================================
+   RPMOne — Design tokens
+   -----------------------------------------------------------------------------
+   Global tokens, Bootstrap overrides, the app shell, skeleton loading and toast
+   motion. Component-specific styles belong in a scoped <style> block.
+   Token names match rpmo_dashboard so its palette can be dropped in as-is.
+   ========================================================================== */
+
+:root {
+    /* -- Brand ------------------------------------------------------------- */
+    --brand:        #0D6EFD;
+    --brand-strong: #0A58CA;
+    --brand-subtle: #CFE2FF;
+
+    /* -- Paper and ink ----------------------------------------------------- */
+    --surface-page:   #F3F4F6;
+    --surface-card:   #FFFFFF;
+    --surface-sunken: #F8F9FA;
+    --surface-rail:   #111418;
+    --hairline:       #DEE2E6;
+    --hairline-firm:  #C4CAD0;
+    --ink:            #16191D;
+    --ink-soft:       #5C646C;
+    --ink-faint:      #8A9198;
+
+    /* -- Type -------------------------------------------------------------- */
+    --font-ui: 'Public Sans', 'Inter', -apple-system, BlinkMacSystemFont,
+               'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+    /* -- Shape ------------------------------------------------------------- */
+    --r-sm: 3px;
+    --r-md: 4px;
+    --r-lg: 6px;
+    --r-xl: 8px;
+
+    --shadow-overlay: 0 16px 40px rgba(12, 16, 20, .18), 0 2px 8px rgba(12, 16, 20, .10);
+    --shadow-pop:     0 6px 20px rgba(12, 16, 20, .22);
+
+    /* -- Layout metrics ---------------------------------------------------- */
+    --sidebar-width: 248px;
+    --topbar-height: 56px;
+
+    /* -- Bootstrap overrides ----------------------------------------------- */
+    --bs-border-radius:    var(--r-md);
+    --bs-border-radius-sm: var(--r-sm);
+    --bs-border-radius-lg: var(--r-lg);
+    --bs-border-color:     var(--hairline);
+    --bs-body-font-family: var(--font-ui);
+    --bs-body-font-size:   .875rem;
+    --bs-body-line-height: 1.6;
+    --bs-body-color:       var(--ink);
+    --bs-body-bg:          var(--surface-card);
+    --bs-secondary-color:  var(--ink-soft);
+    --bs-tertiary-bg:      var(--surface-sunken);
+}
+
+/* -- Dark ----------------------------------------------------------------- */
+[data-bs-theme="dark"] {
+    --surface-page:   #0B0D0F;
+    --surface-card:   #14171A;
+    --surface-sunken: #1A1E22;
+    --surface-rail:   #000000;
+    --hairline:       #272C31;
+    --hairline-firm:  #3A4148;
+    --ink:            #E8EBEE;
+    --ink-soft:       #9CA4AB;
+    --ink-faint:      #747C84;
+
+    --brand-subtle:   #0B2A55;
+
+    --shadow-overlay: 0 16px 40px rgba(0, 0, 0, .7), 0 2px 8px rgba(0, 0, 0, .5);
+    --shadow-pop:     0 6px 20px rgba(0, 0, 0, .6);
+}
+
+/* =============================================================================
+   Base
+   ========================================================================== */
+body {
+    font-family: var(--font-ui);
+    background: var(--surface-page);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 { font-weight: 700; letter-spacing: -.015em; color: var(--ink); }
+
+table td, table th, .num { font-variant-numeric: tabular-nums; }
+
+:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+}
+
+/* =============================================================================
+   Navigation rail
+   ========================================================================== */
+.sidebar {
+    width: var(--sidebar-width);
+    height: 100vh;
+    height: 100dvh;
+    position: fixed;
+    top: 0; left: 0;
+    z-index: 100;
+    background: var(--surface-rail);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,.16) transparent;
+}
+.sidebar > * { flex-shrink: 0; }
+
+.sidebar-brand {
+    padding: 0 .95rem;
+    min-height: var(--topbar-height);
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    border-bottom: 1px solid rgba(255,255,255,.10);
+}
+.sidebar-brand:hover { color: #fff; }
+.sidebar-brand i { font-size: 1.35rem; color: var(--brand); }
+.sidebar-brand-name { font-weight: 700; font-size: .9375rem; letter-spacing: -.01em; }
+
+.sidebar-label {
+    font-size: .625rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.34);
+    padding: 1.15rem .95rem .3rem;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    padding: .48rem .9rem;
+    font-size: .8125rem;
+    color: rgba(255,255,255,.66);
+    text-decoration: none;
+    white-space: nowrap;
+    border-left: 2px solid transparent;
+    transition: color .12s, background .12s;
+}
+.sidebar-link i { font-size: 1rem; width: 1.1rem; text-align: center; flex-shrink: 0; }
+.sidebar-link:hover { background: rgba(255,255,255,.05); color: #fff; }
+.sidebar-link.active {
+    background: rgba(255,255,255,.07);
+    color: #fff;
+    font-weight: 600;
+    border-left-color: var(--brand);
+}
+.sidebar-link.active i { color: var(--brand); }
+/* A button (Log out) that looks like the links above it. */
+.sidebar-button {
+    width: 100%;
+    border: 0;
+    border-left: 2px solid transparent;
+    background: transparent;
+    text-align: left;
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    padding: .7rem .95rem 1rem;
+    border-top: 1px solid rgba(255,255,255,.08);
+}
+.sidebar-footer .btn {
+    border: 1px solid rgba(255,255,255,.16);
+    color: rgba(255,255,255,.66);
+    font-size: .78125rem;
+    background: transparent;
+}
+.sidebar-footer .btn:hover { background: rgba(255,255,255,.08); color: #fff; }
+.sidebar-user {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    margin-bottom: .6rem;
+    font-size: .78125rem;
+    color: rgba(255,255,255,.66);
+    overflow: hidden;
+}
+.sidebar-user span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* =============================================================================
+   Top bars
+   ========================================================================== */
+.topbar-desktop {
+    height: var(--topbar-height);
+    background: var(--surface-card);
+    border-bottom: 1px solid var(--hairline);
+    display: flex;
+    align-items: center;
+    padding: 0 1.5rem;
+    gap: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.topbar-mobile {
+    display: none;
+    background: var(--surface-rail);
+    color: #fff;
+    padding: 0 .8rem;
+    align-items: center;
+    gap: .55rem;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: var(--topbar-height);
+}
+.topbar-mobile .icon-btn {
+    color: rgba(255,255,255,.8);
+    border: none;
+    background: transparent;
+    padding: .3rem;
+    line-height: 1;
+}
+.topbar-mobile .icon-btn:hover { color: #fff; }
+
+/* =============================================================================
+   Page canvas
+   ========================================================================== */
+.main-with-sidebar {
+    margin-left: var(--sidebar-width);
+    min-height: 100vh;
+    background: var(--surface-page);
+}
+
+.sidebar-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 10, 12, .6);
+    z-index: 99;
+}
+
+.page-content { padding: 1.75rem 1.75rem 4rem; }
+
+@media (max-width: 767.98px) {
+    .sidebar { transform: translateX(-100%); transition: transform .22s ease; }
+    .sidebar.sidebar-open { transform: translateX(0); }
+    .sidebar-backdrop.show { display: block; }
+    .main-with-sidebar { margin-left: 0; }
+    .topbar-mobile { display: flex; }
+    .topbar-desktop { display: none; }
+    .page-content { padding: 1.1rem 1rem 3rem; }
+}
+
+/* =============================================================================
+   Skeleton + motion
+   ========================================================================== */
+.skeleton {
+    background: linear-gradient(90deg, #E9EBEE 0%, #DDE0E4 50%, #E9EBEE 100%);
+    background-size: 300% 100%;
+    animation: shimmer 1.6s ease-in-out infinite;
+    color: transparent !important;
+    pointer-events: none;
+}
+[data-bs-theme="dark"] .skeleton {
+    background: linear-gradient(90deg, #1A1E22 0%, #242A2F 50%, #1A1E22 100%);
+    background-size: 300% 100%;
+}
+@keyframes shimmer {
+    0%   { background-position: 100% 0; }
+    100% { background-position: -100% 0; }
+}
+
+.toast-stack { z-index: 9999; }
+.toast-item  { min-width: 280px; max-width: 420px; }
+.toast-fade-enter-active, .toast-fade-leave-active { transition: opacity .2s ease, transform .2s ease; }
+.toast-fade-enter-from, .toast-fade-leave-to       { opacity: 0; transform: translateY(-6px); }
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .001ms !important;
+    }
+}
